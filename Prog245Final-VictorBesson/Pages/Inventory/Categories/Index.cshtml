@@ -1,0 +1,36 @@
+﻿@page
+@model Prog245Final_VictorBesson.Pages.Inventory.Categories.IndexModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+<h1 class="text-capitalize text-center">Categories</h1>
+<p>
+    <a class="btn btn-primary" asp-page="./Create">Create New</a>&nbsp;
+    <a class="btn btn-primary" asp-page="./../Index">Edit Products</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Category)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.CategoryID"><i class="fas fa-edit"></i></a> 
+                    <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.CategoryID"><i class="fas fa-list"></i></a> 
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.CategoryID"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

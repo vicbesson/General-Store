@@ -1,0 +1,61 @@
+﻿@page
+@model Prog245Final_VictorBesson.Pages.Inventory.IndexModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+<h1 class="text-capitalize text-center">Inventory</h1>
+<p>
+       <a class="btn btn-primary" asp-page="./Create">Create New</a>&nbsp;
+       <a class="btn btn-primary" asp-page="./Categories/Index">Edit Categories</a>
+
+</p>
+@foreach (var category in Model.Category)
+{
+    <h1 class="text-capitalize text-center">@category.Name</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Picture)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Stock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Models.Product product in category.Products)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Name)
+                    </td>
+                    <td>
+                        <img class="img-fluid" src="~/../../Images/@product.Picture" alt="picture" height="80" width="140" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Stock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Price)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@product.ProductID"><i class="fas fa-edit"></i></a> 
+                        <a class="btn btn-warning" asp-page="./Details" asp-route-id="@product.ProductID"><i class="fas fa-list"></i></a> 
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@product.ProductID"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

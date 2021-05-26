@@ -1,0 +1,126 @@
+﻿@page
+@model Prog245Final_VictorBesson.Pages.Inventory.CheckoutModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+@if (Model.Item.Count > 0)
+{
+    <div class="Authorization" style="width:50%; float:left;">
+        <div class="row">
+            <div class="col-md-4" style="max-width:100% !important; flex:0 0 100% !important; width: 100% !important; ">
+                <form method="post">
+                    <h4>Shipping Info</h4>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.FirstName" class="control-label"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.LastName" class="control-label"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.Address" class="control-label"></label>
+                        <input asp-for="Input.Address" class="form-control" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.City" class="control-label"></label>
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.Province" class="control-label"></label>
+                        <input asp-for="Input.Province" class="form-control" />
+                        <span asp-validation-for="Input.Province" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.PostalCode" class="control-label"></label>
+                        <input asp-for="Input.PostalCode" class="form-control" />
+                        <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.Email" class="control-label"></label>
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.Phone" class="control-label"></label>
+                        <input asp-for="Input.Phone" class="form-control" asp-format="{0:###-###-####}" />
+                        <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.CreditCardNumber" class="control-label"></label>
+                        <input asp-for="Input.CreditCardNumber" class="form-control" />
+                        <span asp-validation-for="Input.CreditCardNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.ExpiryDate" class="control-label"></label>
+                        <input asp-for="Input.ExpiryDate" class="form-control" />
+                        <span asp-validation-for="Input.ExpiryDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width: 50%">
+                        <label asp-for="Input.SecurityCode" class="control-label"></label>
+                        <input asp-for="Input.SecurityCode" class="form-control" />
+                        <span asp-validation-for="Input.SecurityCode" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Order</button>
+                </form>
+            </div>
+        </div>
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+    </div>
+}
+<div class="Cart" style="width: 50%; float:right;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Picture
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Item[0].AmountInCart)
+                </th>
+                <th>
+                    Cost
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Models.Item item in Model.Item)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        <img class="img-fluid" src="~/../../Images/@item.Product.Picture" alt="picture" height="80" width="140" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AmountInCart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCost)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h1 class="total" style="border-top:solid; border-width:thin;">Total $@Model.Total.ToString()</h1>
+</div>
+

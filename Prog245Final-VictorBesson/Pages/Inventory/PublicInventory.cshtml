@@ -1,0 +1,91 @@
+﻿@page
+@using Prog245Final_VictorBesson.Utility
+@model Prog245Final_VictorBesson.Pages.Inventory.PublicInventoryModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+@foreach (var category in Model.Category)
+{
+    <h1 class="text-capitalize text-center">@category.Name</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Picture)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Stock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Price)
+                </th>
+                @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Item[0].AmountInCart)
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Models.Product product in category.Products)
+            {
+                @if (product.Stock != 0)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.Name)
+                        </td>
+                        <td>
+                            <img class="img-fluid" src="~/../../Images/@product.Picture" alt="picture" height="80" width="140" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.Stock)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.Price)
+                        </td>
+                        @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
+                        {
+                            <td>
+                                <form asp-page-handler="Remove" method="post" asp-route-val="@product.ProductID.ToString()" style="width:32px; float:left; margin-right: 5px;">
+                                    <button class="btn btn-success btn-sm"><i class="fas fa-minus-circle"></i></button>
+                                </form>
+                                <div class="Amount" style="display:inline-block; float:left; padding-top:2px;">
+                                    @if (Model.Item.Count > 0)
+                                    {
+                                        if (Model.Item.Where(x => x.Product == product).FirstOrDefault() == null)
+                                        {
+                                            <p>0</p>
+                                        }
+
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => modelItem.Item.Where(x => x.Product == product).FirstOrDefault().AmountInCart)
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>0</p>
+                                    }
+                                </div>
+                                <form asp-page-handler="Add" method="post" asp-route-val="@product.ProductID.ToString()" style="width:32px; float:left; margin-left: 5px;">
+                                    <button class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
+                                </form>
+                            </td>
+                        }
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+@if ((User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser)) && Model.Item.Count > 0)
+{
+    <a class="btn btn-primary" asp-page="./Checkout">Checkout</a>
+}
