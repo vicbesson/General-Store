@@ -1,0 +1,1 @@
+•	Web store created using RazorPages, Bootstrap, and JQuery. The store connects to a MSSQL server, using the Entity Framework and LINQ. The store allows user registration, allows admin to remove and add items to store, and allows users to add items to cart and “buy” them.
